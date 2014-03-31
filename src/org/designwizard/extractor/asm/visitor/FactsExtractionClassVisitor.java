@@ -69,8 +69,7 @@ public class FactsExtractionClassVisitor extends FactsEventSourceImpl {
 
 	private void visitModule(URLClassLoader loader, String className) {
 		try {
-			Class<?> classe;
-			classe = loader.loadClass(className.replace('/', '.'));
+			Class<?> classe = loader.loadClass(className.replace('/', '.'));
 			
 			if (classe.isAnnotationPresent(ArchModule.class)) {
 				ArchModule module = classe.getAnnotation(ArchModule.class);
@@ -83,7 +82,7 @@ public class FactsExtractionClassVisitor extends FactsEventSourceImpl {
 				super.fireRelationExtracted();
 			}
 		} catch (ClassNotFoundException e) {
-			// TODO Se der erro, diz que não tem módulo? Melhor
+			// TODO Se der erro, diz que nï¿½o tem mï¿½dulo? Melhor
 			e.printStackTrace();
 		}
 	}
