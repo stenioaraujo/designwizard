@@ -1,10 +1,13 @@
 package org.designwizard.extractor.asm.visitor;
 
+import java.net.URLClassLoader;
 import java.util.Collection;
 
+import org.designwizard.archmodule.ArchModule;
 import org.designwizard.extractor.asm.event.FactEvent;
 import org.designwizard.extractor.asm.event.FactsEventSourceImpl;
 import org.designwizard.extractor.asm.util.OpcodesTranslator;
+import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -12,20 +15,30 @@ import org.objectweb.asm.Opcodes;
 public class FactsExtractionClassVisitor extends FactsEventSourceImpl {
 
 	private String className;
+	private URLClassLoader loader;
 
 	public FactsExtractionClassVisitor(String className) {
 
 		this.className = className;
 
 	}
+	
+	public FactsExtractionClassVisitor(String className, URLClassLoader loader) {
+
+		this.className = className;
+		this.loader = loader;
+	}
 
 	@Override
 	public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
 
 		this.className = name;
-
 		this.visitPackage(name);
 
+		if (this.loader != null) {
+			visitModule(loader, className);
+		}
+		
 		super.factEvent = new FactEvent(FactsExtractionClassVisitor.class, name);
 		super.fireClassExtracted();
 
@@ -54,6 +67,27 @@ public class FactsExtractionClassVisitor extends FactsEventSourceImpl {
 
 	}
 
+	private void visitModule(URLClassLoader loader, String className) {
+		try {
+			Class<?> classe;
+			classe = loader.loadClass(className.replace('/', '.'));
+			
+			if (classe.isAnnotationPresent(ArchModule.class)) {
+				ArchModule module = classe.getAnnotation(ArchModule.class);
+				String moduleName = "ArchModule."+module.value();
+				
+				super.factEvent = new FactEvent(FactsExtractionClassVisitor.class, moduleName);
+				super.fireModuleExtracted();
+				
+				super.factEvent = new FactEvent(FactsExtractionClassVisitor.class, "CONTAINS", moduleName, className);
+				super.fireRelationExtracted();
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Se der erro, diz que não tem módulo? Melhor
+			e.printStackTrace();
+		}
+	}
+	
 	private void visitPackage(String className) {
 
 		FactEvent event = extractPackage(className);
@@ -69,6 +103,11 @@ public class FactsExtractionClassVisitor extends FactsEventSourceImpl {
 		
 	}
 
+	@Override
+	public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
+		return super.visitAnnotation(desc, visible);
+	}
+	
 	private FactEvent extractPackage(String className) {
 
 		String classNameWithDots = className.replaceAll("[/\\\\]+", ".");
@@ -81,7 +120,6 @@ public class FactsExtractionClassVisitor extends FactsEventSourceImpl {
 		
 		String packageName = classNameWithDots.substring(0,classNameWithDots.lastIndexOf("."));
 		return new FactEvent(FactsExtractionClassVisitor.class, packageName);
-
 	}
 
 	/*private Collection<FactEvent> extractPackages(String name) {
@@ -115,7 +153,7 @@ public class FactsExtractionClassVisitor extends FactsEventSourceImpl {
 		return returnCollection;
 
 	}*/
-	 
+	
 	@Override
 	public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
 

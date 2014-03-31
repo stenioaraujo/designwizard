@@ -19,11 +19,12 @@ public interface Entity {
 	 * @author Joao Arthur Brunet Monteiro - jarthur@dsc.ufcg.edu.br
 	 *
 	 */
-	public enum TypesOfEntities {	
+	public enum TypesOfEntities {
 			CLASS,
 			METHOD,
 			FIELD, 
 			PACKAGE,
+			MODULE
 	}
 	
 	/**

@@ -53,7 +53,6 @@ public class FactEvent extends EventObject {
 		super(source);
 		this.entity = entity.replace("/", ".");
 		this.modifiers = modifiers;
-	
 	}
 	
 	

@@ -7,6 +7,7 @@ import org.designwizard.common.Config;
 import org.designwizard.design.ClassNode;
 import org.designwizard.design.FieldNode;
 import org.designwizard.design.MethodNode;
+import org.designwizard.design.ModuleNode;
 import org.designwizard.design.PackageNode;
 import org.designwizard.design.manager.DesignManager;
 import org.designwizard.design.manager.ResultOfImpact;
@@ -81,6 +82,20 @@ public class DesignWizard {
 	public PackageNode getPackage(String fullyQualifiedNamePackage) throws InexistentEntityException {
 
 		return this.manager.getPackage(fullyQualifiedNamePackage);
+	
+	}
+
+	/**
+	 * Returns the <code>ModuleNode</code> object associated with the Module
+	 * with the given string name.
+	 * @param	fullyQualifiedNameModule the fully qualified name of the desired Module. The fully qualified name of the Module is ArchModule.[module], [module] is the name of Module.
+	 * @return	the <code>ModuleNode</code> object for the Module with the
+     *         	specified name.
+	 * @throws 	InexistentEntityException	if the class cannot be located
+	 */
+	public ModuleNode getModule(String fullyQualifiedNameModule) throws InexistentEntityException {
+
+		return this.manager.getModule(fullyQualifiedNameModule);
 	
 	}
 	
@@ -181,6 +196,18 @@ public class DesignWizard {
 	public Set<PackageNode> getAllPackages(){
 	
 		return this.manager.getAllPackages();
+	
+	}
+	
+	/**
+     * Returns a <code>java.util.Set</code> containing <code>ModuleNode</code> objects reflecting all
+     * the modules extracted.
+     * @return	the set of <code>ModuleeNode</code> objects representing the
+     * 			modules extracted.
+	 */
+	public Set<ModuleNode> getAllModules(){
+	
+		return this.manager.getAllModules();
 	
 	}
 	

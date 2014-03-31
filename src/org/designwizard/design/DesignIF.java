@@ -96,10 +96,15 @@ public interface DesignIF {
 	public void resolveDependences();
 
 	public Collection<PackageNode> getAllPackagesFromCode();
+	
+	public Collection<ModuleNode> getAllModulesFromCode();
 
 	public void packageExtracted(String entity);
 
 	public PackageNode getPackage(String fullyQualifiedNamePackage) throws InexistentEntityException;
+
+	public ModuleNode getModule(String fullyQualifiedNameModule) throws InexistentEntityException;
 	
 	public boolean containsEntity(String entityName);
+
 }

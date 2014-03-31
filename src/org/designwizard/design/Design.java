@@ -47,7 +47,6 @@ public class Design implements DesignIF {
 		String toPut = className.replaceAll("[/\\\\]+", ".");
 		
 		try {
-		
 			if (!this.entities.containsKey(toPut)) {
 			
 				this.entities.put(toPut, new ClassNode(toPut));
@@ -63,7 +62,6 @@ public class Design implements DesignIF {
 
 	@Override
 	public void packageExtracted(String entity) {
-		
 		if (!this.entities.containsKey(entity)) {
 		
 			this.entities.put(entity, new PackageNode(entity));
@@ -72,6 +70,14 @@ public class Design implements DesignIF {
 	
 	}
 
+	public void moduleExtracted(String entity) {
+		if (!this.entities.containsKey(entity)) {
+		
+			this.entities.put(entity, new ModuleNode(entity));
+		
+		}
+	
+	}
 	/**
 	 * Adds a new relation in the design.
 	 * @param relation the relation to be added.
@@ -90,7 +96,7 @@ public class Design implements DesignIF {
 		caller = factory.createEntity(callerName);
 		called = factory.createEntity(calledName);
 		Relation relation = factory.createRelation(typeOfRelation, caller, called);
-
+		
 		this.addNewEntities(caller, called, relation);
 
 		Relation reverseRelation = this.resolveReverseRelation(caller,called,typeOfRelation);
@@ -408,7 +414,19 @@ public class Design implements DesignIF {
 	public Set<PackageNode> getAllPackagesFromCode() {
 		Set<PackageNode> feedBack = new HashSet<PackageNode>();
 		for (Entity entity : this.entities.values()) {
+			System.out.println(entity);
 			if (entity.getTypeOfEntity().equals(TypesOfEntities.PACKAGE)) feedBack.add((PackageNode) entity);
+		}
+		return feedBack;
+	}
+
+	@Override
+	public Set<ModuleNode> getAllModulesFromCode() {
+		Set<ModuleNode> feedBack = new HashSet<ModuleNode>();
+		for (Entity entity : this.entities.values()) {
+			if (entity.getTypeOfEntity().equals(TypesOfEntities.MODULE)) {
+				feedBack.add((ModuleNode) entity);
+			}
 		}
 		return feedBack;
 	}
@@ -418,6 +436,11 @@ public class Design implements DesignIF {
 		return (PackageNode) this.getEntity(fullyQualifiedNamePackage);
 	}
 
+	@Override
+	public ModuleNode getModule(String fullyQualifiedNameModule) throws InexistentEntityException {
+		return (ModuleNode) this.getEntity(fullyQualifiedNameModule);
+	}
+
 	public Set<MethodNode> getAllMethods() {
 		Set<MethodNode> feedBack = new HashSet<MethodNode>();
 		for (ClassNode c : this.getAllClasses()) {
@@ -425,7 +448,6 @@ public class Design implements DesignIF {
 		}
 		return feedBack;
 	}
-	
 }
 
 

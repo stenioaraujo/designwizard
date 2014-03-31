@@ -73,6 +73,8 @@ public class ASMExtractor implements Extractor {
 
 			}
 
+		} else if (file.isFile()) { // alteração nessa linha.
+			System.out.println(file.getCanonicalPath() + "\n Aí fica tenso, ninguém quer me ler.");
 		}
 
 	}
@@ -104,16 +106,15 @@ public class ASMExtractor implements Extractor {
 		String toPut = className.replace(".class", "");
 
 		InputStream in = loader.getResourceAsStream(toPut.replace('.',File.separatorChar) + ".class");
-
+		
 		if (in == null)	in = new FileInputStream(new File(className).getAbsoluteFile());
 		ClassReader cr = new ClassReader(in);
 		
-
-		FactsEventSource cv = new FactsExtractionClassVisitor(className.replace(".class", ""));
+		FactsEventSource cv = new FactsExtractionClassVisitor(className.replace(".class", ""), loader);
 		cv.addListener(this.managers);
 		cr.accept(cv, 0);
 		in.close();
-
+		
 	}
 
 	/*

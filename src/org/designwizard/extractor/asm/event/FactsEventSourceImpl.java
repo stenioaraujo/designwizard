@@ -98,6 +98,12 @@ public class FactsEventSourceImpl implements FactsEventSource {
     	}
 	}
 
+	public void fireModuleExtracted() {
+		for (ExtractionListener l : this.listeners) {
+    		l.moduleExtracted(this.factEvent);
+    	}
+	}
+
 
 	@Override
 	public void visit(int version, int access, String name, String signature,
@@ -128,7 +134,6 @@ public class FactsEventSourceImpl implements FactsEventSource {
 	public void visitInnerClass(String name, String outerName,
 			String innerName, int access) {
 		this.cv.visitInnerClass(name, outerName, innerName, access);
-		
 	}
 
 	@Override

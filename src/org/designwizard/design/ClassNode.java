@@ -882,5 +882,20 @@ public class ClassNode extends AbstractEntity implements Entity {
 	public boolean implementsInterface(ClassNode interfaceClassNode) {
 		return this.getImplementedInterfaces().contains((interfaceClassNode));
 	}
+
+	/**
+	 * @return The <code>ModuleNode</code> declared on ArchModule Annotation. If ArchModule Don't exist, return null.
+	 */
+	public ModuleNode getModule() {
+		ModuleNode feedBack = null;
+		for (Relation relation: getRelations(TypesOfRelation.IS_DECLARED_ON)) {
+			if (relation.getCalledEntity() instanceof ModuleNode) {
+				feedBack = (ModuleNode) relation.getCalledEntity();
+				break;
+			}
+		}
+		
+		return feedBack;
+	}
 	
 }
