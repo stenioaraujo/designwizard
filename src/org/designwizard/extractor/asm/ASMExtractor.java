@@ -183,9 +183,9 @@ public class ASMExtractor implements Extractor {
 				String className = file.getAbsolutePath();
 				FileInputStream in = new FileInputStream(className);
 				ClassReader cr = new ClassReader(in);
+				URLClassLoader loader = new URLClassLoader(new URL[]{file.toURL()});
 				
-				FactsEventSource cv = new FactsExtractionClassVisitor(className.replace(".class",
-						""));
+				FactsEventSource cv = new FactsExtractionClassVisitor(className.replace(".class", ""), loader);
 				cv.addListener(this.managers);
 				cr.accept(cv, 0);
 				in.close();

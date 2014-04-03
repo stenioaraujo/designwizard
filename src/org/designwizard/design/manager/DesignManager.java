@@ -247,7 +247,9 @@ public class DesignManager implements ExtractionListener {
 	 */
 	public void classExtracted(FactEvent event) {
 		if (classesLidas.contains(event.getEntity())) {
+			/* TODO verifique isso com mais clareza. Ele no teste do epol esta pegando todas as classes
 			System.err.println("A classe "+event.getEntity().replace('/', '.')+" Já foi lida");
+			*/
 		} else {
 			classesLidas.add(event.getEntity());
 		}

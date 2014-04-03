@@ -82,8 +82,7 @@ public class FactsExtractionClassVisitor extends FactsEventSourceImpl {
 				super.fireRelationExtracted();
 			}
 		} catch (ClassNotFoundException e) {
-			// TODO Se der erro, diz que n�o tem m�dulo? Melhor
-			e.printStackTrace();
+			// TODO fix it;
 		}
 	}
 	

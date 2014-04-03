@@ -1,39 +1,33 @@
 package org.designwizard.archmodule;
 
 import java.io.IOException;
-import java.util.Set;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.Arrays;
 
-import javax.xml.bind.annotation.XmlAccessOrder;
-import javax.xml.bind.annotation.XmlAccessorOrder;
-import javax.xml.bind.annotation.XmlAccessorType;
-
-import org.designwizard.design.ClassNode;
-import org.designwizard.main.DesignWizard;
+import com.sun.xml.internal.ws.developer.Stateful;
 
 @ArchModule("banco")
 public class ClasseQualquer {
 
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) throws IOException, ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException{
 		testaQualquerCoisa();
 	}
 	
-	private static void testaQualquerCoisa() throws IOException{
-		//DesignWizard dw = new DesignWizard("/home/stenio/Desktop/projetinho.jar");
-		DesignWizard dw = new DesignWizard("/home/stenio/Desktop/sampleEAR/queGeramDiscordanciaNoDesignWizard/jboss-developer-jboss-eap-quickstarts-35b9ef7");
-		
-		Set<ClassNode> classes = dw.getAllClasses();
-		
-		for (ClassNode classe : classes){
-			System.out.println(classe.toString());
+	private static void testaQualquerCoisa() throws IOException, ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException{
+		URLClassLoader loader = new URLClassLoader(new URL[]{new URL("file:///home/stenio/workplace2/designwizard/classes/org/designwizard/archmodule/ClasseQualquer.class")});
+		Class<?> classe = loader.loadClass("org.designwizard.archmodule.ClasseQualquer");
+		for (Annotation an: classe.getAnnotations()) {
+			Class<?> a = an.annotationType();
+			for (Method method: a.getMethods()) {
+				if (method.getDeclaringClass().equals(an.annotationType())) {
+					System.out.println(method.invoke(an, null));
+				}
+			}
 		}
-		/*
-		dw = new DesignWizard("/home/stenio/Desktop/testeDePenetracaoDoDesignWizard.zip");
-		
-		classes = dw.getAllClasses();
-		/*
-		for (ClassNode classe : classes){
-			System.out.println(classe.toString());
-		}*/
 	}
 	
 	public String oi() {

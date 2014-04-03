@@ -24,7 +24,8 @@ public interface Entity {
 			METHOD,
 			FIELD, 
 			PACKAGE,
-			MODULE
+			MODULE,
+			ANNOTATION
 	}
 	
 	/**
