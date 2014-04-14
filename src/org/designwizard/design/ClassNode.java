@@ -787,7 +787,8 @@ public class ClassNode extends AbstractEntity implements Entity {
 	public Set<ClassNode> getCallerClasses() {
 		
 		Set<ClassNode> feedBack = new HashSet<ClassNode>();
-		Set<Relation> relations = this.getRelations(TypesOfRelation.CONTAINS);
+		Set<Relation> relations = this.getRelations(TypesOfRelation.IS_DECLARED_ON);
+		relations.addAll(this.getRelations(TypesOfRelation.IS_SUPERCLASS));
 		
 		for (Relation relation: relations) {
 		

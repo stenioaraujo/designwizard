@@ -73,9 +73,9 @@ public class ASMExtractor implements Extractor {
 
 			}
 
-		} else if (file.isFile()) { // alteração nessa linha.
+		}/* else if (file.isFile()) { // alteração nessa linha.
 			System.out.println(file.getCanonicalPath() + "\n Aí fica tenso, ninguém quer me ler.");
-		}
+		}*/
 
 	}
 

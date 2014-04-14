@@ -8,9 +8,13 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Arrays;
 
+import javax.xml.bind.annotation.XmlEnum;
+
+import com.sun.xml.internal.txw2.annotation.XmlElement;
 import com.sun.xml.internal.ws.developer.Stateful;
 
 @ArchModule("banco")
+@XmlElement
 public class ClasseQualquer {
 
 	public static void main(String[] args) throws IOException, ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException{

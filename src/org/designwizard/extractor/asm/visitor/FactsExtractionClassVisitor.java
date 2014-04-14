@@ -1,5 +1,6 @@
 package org.designwizard.extractor.asm.visitor;
 
+import java.lang.annotation.Annotation;
 import java.net.URLClassLoader;
 import java.util.Collection;
 
@@ -37,6 +38,7 @@ public class FactsExtractionClassVisitor extends FactsEventSourceImpl {
 
 		if (this.loader != null) {
 			visitModule(loader, className);
+			//visitAnnotation(loader, className);
 		}
 		
 		super.factEvent = new FactEvent(FactsExtractionClassVisitor.class, name);
@@ -66,6 +68,24 @@ public class FactsExtractionClassVisitor extends FactsEventSourceImpl {
 		super.fireVisibilityExtracted();
 
 	}
+
+	/*
+	private void visitAnnotation(URLClassLoader loader, String className) {
+		try{
+			Class<?> classe = loader.loadClass(className.replace('/', '.'));
+			
+			for (Annotation annotation: classe.getAnnotations()) {
+				super.factEvent = new FactEvent(FactsExtractionClassVisitor.class, moduleName);
+				super.fireModuleExtracted();
+				
+				super.factEvent = new FactEvent(FactsExtractionClassVisitor.class, "CONTAINS", moduleName, className);
+				super.fireRelationExtracted();
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO fix it;
+		}
+	}
+	*/
 
 	private void visitModule(URLClassLoader loader, String className) {
 		try {
