@@ -1,6 +1,10 @@
+.gitignore
 /bin
+
 .classpath
+
 /classes
+
 .project
 /src/org/designwizard/main/Testa.java
 /src/org/designwizard/archmodule/ArchitectureDesignTest.java
