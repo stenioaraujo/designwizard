@@ -2,3 +2,7 @@
 .classpath
 /classes
 .project
+/src/org/designwizard/main/Testa.java
+/src/org/designwizard/archmodule/ArchitectureDesignTest.java
+/src/org/designwizard/archmodule/ClasseQualquer.java
+/src/org/designwizard/archmodule/Otraclasse.java
