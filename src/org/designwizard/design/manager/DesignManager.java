@@ -170,7 +170,7 @@ public class DesignManager implements ExtractionListener {
 		if (caller.length() != 1) {
 			toPutCaller = this.translator.translateBytecodeToJavaPattern(caller);
 		}
-		String toPutCalled = this.translator.translateBytecodeToJavaPattern(called);
+		String toPutCalled = this.translator.translateBytecodeToJavaPattern(called).replaceAll(" ", "");
 		this.design.addRelation(type, toPutCaller, toPutCalled);
 	}
 
