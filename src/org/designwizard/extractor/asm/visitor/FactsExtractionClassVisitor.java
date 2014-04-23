@@ -55,7 +55,8 @@ public class FactsExtractionClassVisitor extends FactsEventSourceImpl {
 	}
 
 	private void visitPackage(String className) {
-
+		className += " ";
+		
 		FactEvent event = extractPackage(className);
 	
 
